@@ -1,0 +1,182 @@
+{
+  "industries": [
+    "Manufacturing",
+    "Retail & Consumer Goods",
+    "Professional Services",
+    "Life Sciences & Pharma",
+    "High Tech",
+    "Automotive",
+    "Utilities & Energy",
+    "Financial Services"
+  ],
+  "processes": {
+    "Order-to-Cash": {
+      "description": "From order entry through billing, cash application, and collections.",
+      "recommended": [
+        {
+          "name": "Accounts Receivable Collections Agent",
+          "impact": "Prioritizes overdue items and drafts follow-ups; reduces DSO",
+          "hours_saved_per_user_month": 8,
+          "users_typical": 12
+        },
+        {
+          "name": "Invoice Dispute Resolution Agent",
+          "impact": "Classifies disputes and routes with PO/delivery context",
+          "hours_saved_per_user_month": 12,
+          "users_typical": 8
+        },
+        {
+          "name": "Order Status & Fulfillment Insights",
+          "impact": "Instant answers on order blocks and delivery status",
+          "hours_saved_per_user_month": 6,
+          "users_typical": 25
+        },
+        {
+          "name": "Cash Application Skills",
+          "impact": "Faster matching of payments to open items",
+          "hours_saved_per_user_month": 5,
+          "users_typical": 6
+        },
+        {
+          "name": "Sales Pricing / Quoting Agent",
+          "impact": "Context-aware discount recommendations with margin impact",
+          "hours_saved_per_user_month": 4,
+          "users_typical": 15
+        }
+      ]
+    },
+    "Procure-to-Pay": {
+      "description": "From requisition through PO, goods receipt, invoice matching, and payment.",
+      "recommended": [
+        {
+          "name": "Invoice Processing & Matching Agent",
+          "impact": "Reduces manual touches on standard invoices",
+          "hours_saved_per_user_month": 15,
+          "users_typical": 10
+        },
+        {
+          "name": "Procurement Intake Agent",
+          "impact": "Turns natural language requests into structured requisitions",
+          "hours_saved_per_user_month": 7,
+          "users_typical": 40
+        },
+        {
+          "name": "AP Dispute Resolution Agent",
+          "impact": "Handles mismatches and routes exceptions",
+          "hours_saved_per_user_month": 10,
+          "users_typical": 8
+        },
+        {
+          "name": "Expense Report Validation Agent",
+          "impact": "Pre-submit policy checks and receipt validation",
+          "hours_saved_per_user_month": 4,
+          "users_typical": 200
+        },
+        {
+          "name": "Supplier Onboarding Agent",
+          "impact": "Accelerates new supplier setup and compliance checks",
+          "hours_saved_per_user_month": 6,
+          "users_typical": 5
+        }
+      ]
+    },
+    "Hire-to-Retire": {
+      "description": "Recruiting, onboarding, payroll, performance, and employee self-service.",
+      "recommended": [
+        {
+          "name": "Payroll Explanation Agent",
+          "impact": "Deflects payslip and deduction questions",
+          "hours_saved_per_user_month": 3,
+          "users_typical": 8
+        },
+        {
+          "name": "Performance Preparation Agent",
+          "impact": "Gathers feedback and drafts review content",
+          "hours_saved_per_user_month": 5,
+          "users_typical": 30
+        },
+        {
+          "name": "Onboarding Assistant",
+          "impact": "Guides new hires and managers through required steps",
+          "hours_saved_per_user_month": 4,
+          "users_typical": 15
+        },
+        {
+          "name": "HR Self-Service Ticket Deflection",
+          "impact": "Answers policy and process questions",
+          "hours_saved_per_user_month": 6,
+          "users_typical": 5
+        },
+        {
+          "name": "Recruiting Assistant Agents",
+          "impact": "Supports screening and engagement",
+          "hours_saved_per_user_month": 8,
+          "users_typical": 6
+        }
+      ]
+    },
+    "Record-to-Report": {
+      "description": "Financial close, reporting, cash management, and variance analysis.",
+      "recommended": [
+        {
+          "name": "Cash Management Agent",
+          "impact": "Automates reconciliations and cash positioning",
+          "hours_saved_per_user_month": 18,
+          "users_typical": 4
+        },
+        {
+          "name": "Period Close & Accrual Skills",
+          "impact": "Speeds standard compliance and accrual processing",
+          "hours_saved_per_user_month": 12,
+          "users_typical": 6
+        },
+        {
+          "name": "Variance Analysis Skills",
+          "impact": "Narrative summaries of P&L and cost center deviations",
+          "hours_saved_per_user_month": 8,
+          "users_typical": 8
+        },
+        {
+          "name": "Financial Reporting Narrative",
+          "impact": "Instant commentary on key metrics",
+          "hours_saved_per_user_month": 6,
+          "users_typical": 10
+        }
+      ]
+    },
+    "Design-to-Operate": {
+      "description": "Production planning, manufacturing execution, and supply chain exceptions.",
+      "recommended": [
+        {
+          "name": "Production Planning & Operations Agent",
+          "impact": "Material availability checks and order release support",
+          "hours_saved_per_user_month": 10,
+          "users_typical": 15
+        },
+        {
+          "name": "Production Order Release Agent",
+          "impact": "Faster, more reliable release decisions",
+          "hours_saved_per_user_month": 8,
+          "users_typical": 12
+        },
+        {
+          "name": "Supply Chain Exception Management",
+          "impact": "Senses and resolves planning exceptions",
+          "hours_saved_per_user_month": 9,
+          "users_typical": 8
+        },
+        {
+          "name": "Asset Operations / Maintenance Agent",
+          "impact": "Initiates and screens maintenance requests",
+          "hours_saved_per_user_month": 6,
+          "users_typical": 10
+        }
+      ]
+    }
+  },
+  "assumptions": {
+    "hourly_cost_eur": 68,
+    "realization_factor": 0.7,
+    "ramp_year1": 0.75
+  }
+}
