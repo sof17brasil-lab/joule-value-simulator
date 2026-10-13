@@ -1,224 +1,31 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Joule Value Realization Simulator | SAP CSM Project</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Inter', system-ui, sans-serif; }
-    .sap-blue { color: #0070f2; }
-    .bg-sap { background-color: #0070f2; }
-    .card { transition: all 0.25s ease; }
-    .card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.1); }
-    .expandable { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
-    .expandable.open { max-height: 800px; }
-  </style>
-</head>
-<body class="bg-slate-50 text-slate-800">
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-10">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 bg-sap rounded-lg flex items-center justify-center text-white font-bold text-xl">J</div>
-        <div>
-          <h1 class="text-xl font-semibold text-slate-900">Joule Value Realization Simulator</h1>
-          <p class="text-xs text-slate-500">SAP Academy for Customer Success · Portfolio Project</p>
-        </div>
-      </div>
-      <div class="text-xs text-slate-400">Simulated data · October 2026</div>
-    </div>
-  </header>
-  <main class="max-w-7xl mx-auto px-6 py-8">
-    <div class="mb-8">
-      <h2 class="text-2xl font-bold text-slate-900 mb-2">Unlock measurable value from SAP Business AI</h2>
-      <p class="text-slate-600 max-w-3xl">Select an industry and end-to-end process. The simulator recommends the highest-impact Joule skills and agents to activate first, estimates realistic time and cost savings, and shows a 90-day adoption roadmap. All assumptions are transparent.</p>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-      <div>
-        <label class="block text-sm font-medium text-slate-700 mb-1">Industry</label>
-        <select id="industry" class="w-full border border-slate-300 rounded-lg px-4 py-2.5 bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-          <option value="">Select industry...</option>
-        </select>
-      </div>
-      <div>
-        <label class="block text-sm font-medium text-slate-700 mb-1">Primary Process</label>
-        <select id="process" class="w-full border border-slate-300 rounded-lg px-4 py-2.5 bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500" disabled>
-          <option value="">Select process...</option>
-        </select>
-      </div>
-    </div>
-    <div id="results" class="hidden">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <div class="bg-white rounded-xl p-5 border border-slate-200 card">
-          <p class="text-xs text-slate-500 uppercase tracking-wide">Value Left on Table</p>
-          <p id="kpi-value" class="text-2xl font-bold text-slate-900 mt-1">€0</p>
-          <p class="text-xs text-slate-400 mt-1">Annual unrealized (Year 1)</p>
-        </div>
-        <div class="bg-white rounded-xl p-5 border border-slate-200 card">
-          <p class="text-xs text-slate-500 uppercase tracking-wide">Hours Saved / Year</p>
-          <p id="kpi-hours" class="text-2xl font-bold text-slate-900 mt-1">0</p>
-          <p class="text-xs text-slate-400 mt-1">Across recommended skills</p>
-        </div>
-        <div class="bg-white rounded-xl p-5 border border-slate-200 card">
-          <p class="text-xs text-slate-500 uppercase tracking-wide">Skills to Activate</p>
-          <p id="kpi-skills" class="text-2xl font-bold text-slate-900 mt-1">0</p>
-          <p class="text-xs text-slate-400 mt-1">Highest-impact first</p>
-        </div>
-        <div class="bg-white rounded-xl p-5 border border-slate-200 card">
-          <p class="text-xs text-slate-500 uppercase tracking-wide">Realization Factor</p>
-          <p class="text-2xl font-bold text-slate-900 mt-1">70%</p>
-          <p class="text-xs text-slate-400 mt-1">Conservative assumption</p>
-        </div>
-      </div>
-      <div class="bg-white rounded-xl p-6 border border-slate-200 mb-8">
-        <h3 class="font-semibold text-slate-900 mb-4">Estimated Annual Value by Skill (€)</h3>
-        <canvas id="valueChart" height="120"></canvas>
-      </div>
-      <div class="bg-white rounded-xl border border-slate-200 overflow-hidden mb-8">
-        <div class="px-6 py-4 border-b border-slate-200">
-          <h3 class="font-semibold text-slate-900">Recommended Joule Skills & Agents</h3>
-          <p id="process-desc" class="text-sm text-slate-500 mt-1"></p>
-        </div>
-        <div id="recommendations" class="divide-y divide-slate-100"></div>
-      </div>
-      <div class="bg-white rounded-xl p-6 border border-slate-200">
-        <h3 class="font-semibold text-slate-900 mb-4">90-Day Adoption Roadmap</h3>
-        <div class="space-y-4">
-          <div class="flex gap-4">
-            <div class="flex-shrink-0 w-20 text-sm font-medium text-sap">Week 1–2</div>
-            <div>
-              <p class="font-medium">Enable & Champion</p>
-              <p class="text-sm text-slate-600">Activate the top 2 skills. Identify 2–3 process owners as champions. Run short enablement sessions.</p>
-            </div>
-          </div>
-          <div class="flex gap-4">
-            <div class="flex-shrink-0 w-20 text-sm font-medium text-sap">Week 3–6</div>
-            <div>
-              <p class="font-medium">Pilot</p>
-              <p class="text-sm text-slate-600">Pilot with one team. Measure baseline vs. actual time saved. Adjust prompts and governance.</p>
-            </div>
-          </div>
-          <div class="flex gap-4">
-            <div class="flex-shrink-0 w-20 text-sm font-medium text-sap">Week 7–12</div>
-            <div>
-              <p class="font-medium">Scale & Measure</p>
-              <p class="text-sm text-slate-600">Expand to additional users. Track value realized. Prepare expansion case for next process or additional agents.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="mt-12 text-xs text-slate-400 border-t border-slate-200 pt-6">
-      <p><strong>Disclaimer:</strong> This is a demonstration tool built for a SAP Academy for Customer Success portfolio project. All data, recommendations, and value estimates are simulated and informed by publicly available SAP announcements and early-adopter reports as of October 2026. No real customer data is used. Assumptions are conservative and transparent so they can be discussed in an interview.</p>
-    </div>
-  </main>
-  <script>
-    let data = null;
-    let chart = null;
-    async function loadData() {
-      const res = await fetch('./data/simulator_data.json');
-      data = await res.json();
-      populateSelectors();
-    }
-    function populateSelectors() {
-      const industrySelect = document.getElementById('industry');
-      data.industries.forEach(ind => {
-        const opt = document.createElement('option');
-        opt.value = ind;
-        opt.textContent = ind;
-        industrySelect.appendChild(opt);
-      });
-      const processSelect = document.getElementById('process');
-      Object.keys(data.processes).forEach(proc => {
-        const opt = document.createElement('option');
-        opt.value = proc;
-        opt.textContent = proc;
-        processSelect.appendChild(opt);
-      });
-      industrySelect.addEventListener('change', () => {
-        processSelect.disabled = !industrySelect.value;
-        if (industrySelect.value && processSelect.value) renderResults();
-      });
-      processSelect.addEventListener('change', () => {
-        if (industrySelect.value && processSelect.value) renderResults();
-      });
-    }
-    function renderResults() {
-      const industry = document.getElementById('industry').value;
-      const process = document.getElementById('process').value;
-      if (!industry || !process) return;
-      const procData = data.processes[process];
-      const assumptions = data.assumptions;
-      const hourly = assumptions.hourly_cost_eur;
-      const realization = assumptions.realization_factor;
-      const ramp = assumptions.ramp_year1;
-      document.getElementById('process-desc').textContent = procData.description;
-      let totalValue = 0;
-      let totalHours = 0;
-      const labels = [];
-      const values = [];
-      const recContainer = document.getElementById('recommendations');
-      recContainer.innerHTML = '';
-      procData.recommended.forEach((skill, idx) => {
-        const annualHours = skill.hours_saved_per_user_month * 12 * skill.users_typical * ramp;
-        const annualValue = annualHours * hourly * realization;
-        totalHours += annualHours;
-        totalValue += annualValue;
-        labels.push(skill.name.split(' ').slice(0, 3).join(' ') + '...');
-        values.push(Math.round(annualValue));
-        const div = document.createElement('div');
-        div.className = 'px-6 py-4 hover:bg-slate-50 cursor-pointer';
-        div.innerHTML = `
-          <div class="flex justify-between items-start">
-            <div class="flex-1">
-              <div class="flex items-center gap-2">
-                <span class="text-sm font-medium text-slate-900">${idx + 1}. ${skill.name}</span>
-                <span class="text-xs bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full">€${Math.round(annualValue).toLocaleString()}</span>
-              </div>
-              <p class="text-sm text-slate-600 mt-1">${skill.impact}</p>
-            </div>
-            <div class="text-right text-sm text-slate-500">
-              ${Math.round(annualHours).toLocaleString()} hrs/yr
-            </div>
-          </div>
-          <div class="expandable mt-2 text-xs text-slate-500 pl-4 border-l-2 border-blue-200">
-            <p><strong>Assumption:</strong> ${skill.hours_saved_per_user_month} hrs/user/month × ${skill.users_typical} users × 12 months × ${Math.round(ramp*100)}% ramp × ${Math.round(realization*100)}% realization × €${hourly}/hr</p>
-          </div>
-        `;
-        div.addEventListener('click', () => {
-          div.querySelector('.expandable').classList.toggle('open');
-        });
-        recContainer.appendChild(div);
-      });
-      document.getElementById('kpi-value').textContent = '€' + Math.round(totalValue).toLocaleString();
-      document.getElementById('kpi-hours').textContent = Math.round(totalHours).toLocaleString();
-      document.getElementById('kpi-skills').textContent = procData.recommended.length;
-      document.getElementById('results').classList.remove('hidden');
-      if (chart) chart.destroy();
-      const ctx = document.getElementById('valueChart').getContext('2d');
-      chart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: labels,
-          datasets: [{
-            label: 'Annual Value (€)',
-            data: values,
-            backgroundColor: '#0070f2',
-            borderRadius: 6
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: { legend: { display: false } },
-          scales: {
-            y: { beginAtZero: true, ticks: { callback: v => '€' + (v/1000).toFixed(0) + 'k' } }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Joule Value Realization Simulator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              background: '#ffffff',
+              foreground: '#09090b',
+              card: '#ffffff',
+              'card-foreground': '#09090b',
+              muted: '#f4f4f5',
+              'muted-foreground': '#71717a',
+              border: '#e4e4e7',
+              ring: '#18181b',
+            }
           }
         }
-      });
-    }
-    loadData();
-  </script>
-</body>
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
