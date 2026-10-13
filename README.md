@@ -1,9 +1,9 @@
 # Joule & Business AI Value Realization Simulator
 
-Interactive portfolio project for the SAP Academy for Customer Success.
+Simple static version (no install required).
 
-Select an industry and end-to-end process to see recommended Joule skills and agents, estimated time and cost savings, and a 90-day adoption roadmap.
+Open `index.html` in a browser, or enable GitHub Pages.
 
-All numbers are simulated and transparent.
+Select an industry and process to see recommended Joule skills, estimated value, and a 90-day roadmap.
 
-**Enable GitHub Pages:** Settings → Pages → Deploy from branch → main / root.
+All data is simulated.
